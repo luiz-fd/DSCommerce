@@ -19,11 +19,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private String name;
 	@Column(unique = true)
 	private String email;
 	private String phone;
-	private LocalDate birhtDate;
+	private LocalDate birthDate;
 	private String password;
 	
 	@OneToMany(mappedBy = "client")
@@ -36,10 +36,10 @@ public class User {
 	public User(Long id, String nome, String email, String phone, LocalDate birhtDate, String password) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.name = nome;
 		this.email = email;
 		this.phone = phone;
-		this.birhtDate = birhtDate;
+		this.birthDate = birhtDate;
 		this.password = password;
 	}
 
@@ -52,11 +52,11 @@ public class User {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.name = nome;
 	}
 
 	public String getEmail() {
@@ -76,11 +76,11 @@ public class User {
 	}
 
 	public LocalDate getBirhtDate() {
-		return birhtDate;
+		return birthDate;
 	}
 
 	public void setBirhtDate(LocalDate birhtDate) {
-		this.birhtDate = birhtDate;
+		this.birthDate = birhtDate;
 	}
 
 	public String getPassword() {
