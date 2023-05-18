@@ -24,15 +24,24 @@ public class ProductService {
 		Optional<Product> resultado = productRepository.findById(id);
 		Product product = resultado.get();
 		ProductDTO productDto = new ProductDTO(product);
-		return productDto;
-		
+		return productDto;		
 	}
 
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAll(Pageable pageable) {
 		Page<Product> resultado = productRepository.findAll(pageable);
-		return resultado.map(x -> new ProductDTO(x));
-		
+		return resultado.map(x -> new ProductDTO(x));		
+	}
+
+	@Transactional()
+	public ProductDTO insert(ProductDTO dto) {
+		Product entity = new Product();
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setPrice(dto.getPrice());
+		entity.setImgUrl(dto.getImgUrl());
+		entity = productRepository.save(entity);
+		return new ProductDTO(entity);
 	}
 
 }
