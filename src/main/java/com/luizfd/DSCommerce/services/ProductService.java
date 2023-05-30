@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.luizfd.DSCommerce.dto.ProductDTO;
+import com.luizfd.DSCommerce.dto.ProductMinDTO;
 import com.luizfd.DSCommerce.entities.Product;
 import com.luizfd.DSCommerce.repositories.ProductRepository;
 import com.luizfd.DSCommerce.services.exceptions.DataBaseException;
@@ -31,9 +32,9 @@ public class ProductService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAll(String name, Pageable pageable) {
+	public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
 		Page<Product> resultado = productRepository.searchByName(name, pageable);
-		return resultado.map(x -> new ProductDTO(x));		
+		return resultado.map(x -> new ProductMinDTO(x));		
 	}
 
 	@Transactional()
