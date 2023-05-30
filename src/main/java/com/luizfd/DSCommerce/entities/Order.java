@@ -90,6 +90,10 @@ public class Order {
 		return items.stream().map(x -> x.getProduct()).toList();
 	}
 
+	public Payment getPayment() {
+		return payment;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
