@@ -3,15 +3,21 @@ package com.luizfd.DSCommerce.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.luizfd.DSCommerce.dto.UserDTO;
 import com.luizfd.DSCommerce.entities.Role;
 import com.luizfd.DSCommerce.entities.User;
 import com.luizfd.DSCommerce.projections.UserDetailsProjection;
 import com.luizfd.DSCommerce.repositories.UserRepository;
+
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,8 +38,26 @@ public class UserService implements UserDetailsService {
 		user.setPassword(result.get(0).getPassword());
 		for (UserDetailsProjection projection : result) {
 			user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
-		}
+		}	
 		
 		return user;
+	}
+	
+	protected User authenticated() {
+			
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+			String username = jwtPrincipal.getClaim("username");
+			return repository.findByEmail(username).get();
+		} catch (Exception e) {
+			throw new UsernameNotFoundException("Email not found");
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public UserDTO getMe() {
+		User user = authenticated();
+		return new UserDTO(user);
 	}
 }
