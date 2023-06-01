@@ -3,12 +3,10 @@ package com.luizfd.DSCommerce.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.luizfd.DSCommerce.dto.CategoryDTO;
-import com.luizfd.DSCommerce.dto.ProductMinDTO;
 import com.luizfd.DSCommerce.entities.Category;
 import com.luizfd.DSCommerce.repositories.CategoryRepository;
 
